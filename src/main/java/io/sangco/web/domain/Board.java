@@ -4,11 +4,13 @@ import io.sangco.web.enums.BoardType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@ToString
 @Getter
 @NoArgsConstructor
 @Entity
@@ -51,5 +53,12 @@ public class Board implements Serializable {
         this.createdDateTime = createdDateTime;
         this.updatedDateTime = updatedDateTime;
         this.user = user;
+    }
+
+    public String getUserName() {
+        if (this.user == null) {
+            return "";
+        }
+        return user.getName();
     }
 }

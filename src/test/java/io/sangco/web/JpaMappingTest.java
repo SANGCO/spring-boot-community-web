@@ -9,8 +9,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,5 +63,12 @@ public class JpaMappingTest {
         assertThat(board.getSubTitle(), is("서브 타이틀"));
         assertThat(board.getContent(), is("컨텐츠"));
         assertThat(board.getBoardType(), is(BoardType.FREE));
+    }
+
+    @Test
+    public void boardFindAllTest() {
+        Pageable pageable = PageRequest.of(0, 5);
+        Page<Board> boards = boardRepository.findAll(pageable);
+        boards.stream().forEach(System.out::println);
     }
 }
